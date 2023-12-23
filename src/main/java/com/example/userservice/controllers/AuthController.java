@@ -2,6 +2,8 @@ package com.example.userservice.controllers;
 
 import com.example.userservice.dtos.*;
 import com.example.userservice.dtos.*;
+import com.example.userservice.exceptions.NoOfActiveSessionExceeded;
+import com.example.userservice.exceptions.TokenExpiredException;
 import com.example.userservice.models.SessionStatus;
 import com.example.userservice.services.AuthService;
 import org.springframework.http.HttpStatus;
@@ -21,7 +23,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserDto> login(@RequestBody LoginRequestDto request) {
+    public ResponseEntity<UserDto> login(@RequestBody LoginRequestDto request) throws NoOfActiveSessionExceeded {
         return authService.login(request.getEmail(), request.getPassword());
 //        return null;
     }
@@ -38,7 +40,7 @@ public class AuthController {
     }
 
     @PostMapping("/validate")
-    public ResponseEntity<SessionStatus> validateToken(ValidateTokenRequestDto request) {
+    public ResponseEntity<SessionStatus> validateToken(@RequestBody ValidateTokenRequestDto request) throws TokenExpiredException {
         SessionStatus sessionStatus = authService.validate(request.getToken(), request.getUserId());
 
         return new ResponseEntity<>(sessionStatus, HttpStatus.OK);
