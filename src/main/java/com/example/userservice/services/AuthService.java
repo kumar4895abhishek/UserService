@@ -151,13 +151,11 @@ public class AuthService {
             Date expiringAt = session.get().getExpiringAt();
             Date now = new Date();
 
-            if (now.after(expiringAt)) {
-                // Token has expired
-                // You can handle this by marking the session as EXPIRED and returning an error
+            if (now.after(expiringAt))
+            {
                 session.get().setSessionStatus(SessionStatus.ENDED);
                 sessionRepository.save(session.get());
 
-                // Throw an exception or return an error response
                 throw new TokenExpiredException("Token has expired");
             }
             else
