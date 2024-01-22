@@ -70,7 +70,7 @@ public class AuthService {
         jsonMap.put("email",user.getEmail());
         jsonMap.put("roles", List.of(user.getRoles()));
         jsonMap.put("createdAt",new Date());
-        jsonMap.put("expiryAt", DateUtils.addDays(new Date(),5));
+        jsonMap.put("expiryAt", DateUtils.addDays(new Date(),20));
 
 
 
